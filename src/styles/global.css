@@ -44,6 +44,83 @@ body {
   line-height: 1;
 }
 
+/* Gallery */
+.gallery-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+.album-card {
+  width: calc((100% - 48px) / 3);
+  min-width: 260px;
+}
+
+@media (max-width: 900px) {
+  .album-card {
+    width: calc((100% - 24px) / 2);
+  }
+}
+
+@media (max-width: 560px) {
+  .album-card {
+    width: 100%;
+  }
+}
+
+.album-card {
+  background: #1a0a3a;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(107, 33, 200, 0.2);
+}
+
+.album-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(107, 33, 200, 0.35);
+}
+
+.album-card-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.45s ease;
+}
+
+.album-card-img.hovered {
+  transform: scale(1.08);
+}
+
+.album-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 30%, rgba(10, 0, 30, 0.85) 100%);
+  transition: background 0.3s ease;
+}
+
+.album-card-overlay.hovered {
+  background: linear-gradient(to bottom, rgba(10, 0, 30, 0.15) 0%, rgba(10, 0, 30, 0.92) 100%);
+}
+
+.album-view-btn {
+  display: inline-flex;
+  align-items: center;
+  color: #F5C800;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  opacity: 0.5;
+  transform: translateY(4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.album-view-btn.hovered {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Left drawer */
 .nav-drawer {
   display: none;

@@ -21,3 +21,26 @@ export const testimonials = [
 ];
 
 export const navItems = ["Home", "Gallery", "Join Our Team"];
+
+// To add an album: import your image at the top, then set cover: yourImage
+import startIt from "../assets/start-it-2026.jfif";
+import altitude from "../assets/altitude.jfif";
+
+export const albums = [
+  {
+    id: 1,
+    title: "Start It",
+    date: "December 28, 2025",
+    photoCount: 64,
+    facebookUrl: "https://www.facebook.com/media/set/?set=a.1419353636225491&type=3",
+    cover: startIt,
+  },
+  {
+    id: 2,
+    title: "Altitude",
+    date: "August 1, 2025",
+    photoCount: 112,
+    facebookUrl: "https://www.facebook.com/media/set/?set=a.1296960528464803&type=3",
+    cover: altitude,
+  },
+];

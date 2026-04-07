@@ -1,10 +1,7 @@
 import Navbar from "../components/Navbar";
 import Hero from "../components/hero";
-import ServicesSection from "../components/servicesSection";
-// import AboutSection from "../components/AboutSection";
-// import TestimonialsSection from "../components/TestimonialsSection";
-// import CTASection from "../components/CTASection";
-// import Footer from "../components/Footer";
+import GallerySection from "../components/gallerySection";
+import Footer from "../components/footer";
 import { DARK } from "../styles/colors";
 
 export default function FunkyFitz() {
@@ -20,7 +17,8 @@ export default function FunkyFitz() {
     >
       <Navbar />
       <Hero />
-      <ServicesSection />
+      <GallerySection />
+      <Footer />
     </div>
   );
 }

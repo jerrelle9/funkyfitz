@@ -36,7 +36,7 @@ Thumbs.db
 *.temp
 
 # Assets
-src/assets/
+# src/assets/
 
 # Package manager lock files (optional - uncomment if you want to commit these)
 # package-lock.json
