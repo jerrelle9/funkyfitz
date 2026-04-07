@@ -21,11 +21,11 @@ export default function Footer() {
             <circle cx="12" cy="12" r="3.654"/>
           </svg>
         </a>
-        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" style={{ color: "#ddd", textDecoration: "none", transition: "color 0.2s", display: "flex", alignItems: "center" }} onMouseEnter={(e) => e.currentTarget.style.color = YELLOW} onMouseLeave={(e) => e.currentTarget.style.color = "#ddd"}>
+        {/* <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" style={{ color: "#ddd", textDecoration: "none", transition: "color 0.2s", display: "flex", alignItems: "center" }} onMouseEnter={(e) => e.currentTarget.style.color = YELLOW} onMouseLeave={(e) => e.currentTarget.style.color = "#ddd"}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
             <path d="M23.953 4.57a10 10 0 002.856-3.08 9.965 9.965 0 01-2.824.856 4.971 4.971 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.822 4.822 0 00-8.239 4.4 13.688 13.688 0 01-9.935-5.032 4.82 4.82 0 001.496 6.43 4.783 4.783 0 01-2.212-.616v.06a4.823 4.823 0 003.864 4.726 4.822 4.822 0 01-2.212.084 4.824 4.824 0 004.502 3.35 9.71 9.71 0 01-6.005 2.07 13.994 13.994 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
           </svg>
-        </a>
+        </a> */}
       </div>
     </footer>
   );

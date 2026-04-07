@@ -50,11 +50,11 @@ export default function Hero() {
             <path d="M5.921 20.88c2.379 0 3.417-1.777 3.417-3.296 0-2.18-1.514-3.532-3.417-3.532-1.877 0-3.417 1.368-3.417 3.296 0 1.82 1.56 3.532 3.417 3.532z" fill="none"/>
           </svg>
         </a>
-        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" style={{ color: PURPLE, fontSize: 24, textDecoration: "none", transition: "transform 0.2s" }}>
+        {/* <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" style={{ color: PURPLE, fontSize: 24, textDecoration: "none", transition: "transform 0.2s" }}>
           <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
             <path d="M23.953 4.57a10 10 0 002.856-3.08 9.965 9.965 0 01-2.824.856 4.971 4.971 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.822 4.822 0 00-8.239 4.4 13.688 13.688 0 01-9.935-5.032 4.82 4.82 0 001.496 6.43 4.783 4.783 0 01-2.212-.616v.06a4.823 4.823 0 003.864 4.726 4.822 4.822 0 01-2.212.084 4.824 4.824 0 004.502 3.35 9.71 9.71 0 01-6.005 2.07 13.994 13.994 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
           </svg>
-        </a>
+        </a> */}
       </div>
     </section>
   );
