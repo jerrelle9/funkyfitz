@@ -5,7 +5,7 @@ import { PURPLE, PURPLE_DARK, YELLOW, CORAL, DARK } from "../styles/colors";
 
 const SHIRT_SIZES = ["XS", "S", "M", "L", "XL", "XXL", "3XL"];
 
-const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
+const WEB3FORMS_KEY = "17958cb4-ade4-46e7-9115-49393cd09f9d";
 
 export default function JoinTeam() {
   const [form, setForm] = useState({
