@@ -121,6 +121,60 @@ body {
   transform: translateY(0);
 }
 
+/* Join Our Team form */
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ccc;
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+}
+
+.form-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: #fff;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.form-input::placeholder {
+  color: rgba(255,255,255,0.25);
+}
+
+.form-input:focus {
+  border-color: #6B21C8;
+  background: rgba(107, 33, 200, 0.08);
+}
+
+.form-input.error {
+  border-color: #FF5C4D;
+}
+
+.form-error {
+  display: block;
+  font-size: 12px;
+  color: #FF5C4D;
+  margin-top: 5px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+@media (max-width: 560px) {
+  .form-row {
+    flex-direction: column;
+  }
+}
+
 /* Left drawer */
 .nav-drawer {
   display: none;

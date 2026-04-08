@@ -26,7 +26,7 @@ function AlbumCard({ album }) {
         <div className={`album-card-overlay${hovered ? " hovered" : ""}`} />
 
         {/* Photo count badge */}
-        {album.photoCount && (
+        {/* {album.photoCount && (
           <div style={{
             position: "absolute", top: 12, right: 12,
             background: "rgba(0,0,0,0.6)", color: "#fff",
@@ -36,7 +36,7 @@ function AlbumCard({ album }) {
           }}>
             {album.photoCount} photos
           </div>
-        )}
+        )} */}
       </div>
 
       {/* Card body */}
@@ -61,7 +61,7 @@ function AlbumCard({ album }) {
 
 export default function GallerySection() {
   return (
-    <section style={{ background: "#0d0620", padding: "5rem 2.5rem" }}>
+    <section id="gallery" style={{ background: "#0d0620", padding: "5rem 2.5rem" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
 
         {/* Header */}

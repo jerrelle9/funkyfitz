@@ -20,7 +20,7 @@ export const testimonials = [
   { initials: "TS", name: "Tamara S.", role: "Birthday Celebrant", text: "I wanted something different for my 30th and FunkyFitz delivered beyond anything I imagined. Truly unforgettable night." },
 ];
 
-export const navItems = ["Home", "Gallery", "Join Our Team"];
+export const navItems = ["Home", "Join Our Team"];
 
 // To add an album: import your image at the top, then set cover: yourImage
 import startIt from "../assets/start-it-2026.jfif";
@@ -31,7 +31,7 @@ export const albums = [
     id: 1,
     title: "Start It",
     date: "December 28, 2025",
-    photoCount: 64,
+    // photoCount: 64,
     facebookUrl: "https://www.facebook.com/media/set/?set=a.1419353636225491&type=3",
     cover: startIt,
   },
@@ -39,7 +39,7 @@ export const albums = [
     id: 2,
     title: "Altitude",
     date: "August 1, 2025",
-    photoCount: 112,
+    // photoCount: 112,
     facebookUrl: "https://www.facebook.com/media/set/?set=a.1296960528464803&type=3",
     cover: altitude,
   },
