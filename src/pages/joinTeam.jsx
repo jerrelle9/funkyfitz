@@ -172,7 +172,7 @@ export default function JoinTeam() {
                 fontWeight: 700, cursor: status === "loading" ? "not-allowed" : "pointer",
                 opacity: status === "loading" ? 0.7 : 1,
                 transition: "opacity 0.2s, transform 0.2s",
-                alignSelf: "flex-start",
+                alignSelf: "center",
               }}
               onMouseEnter={e => { if (status !== "loading") e.currentTarget.style.transform = "translateY(-2px)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; }}
