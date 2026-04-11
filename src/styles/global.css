@@ -4,7 +4,17 @@
   padding: 0;
 }
 
-html, body, #root {
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  max-width: 1920px;
+  background: #0d0620;
+}
+
+#root {
   width: 100%;
   min-height: 100vh;
 }
@@ -121,6 +131,39 @@ body {
   transform: translateY(0);
 }
 
+/* Hide on mobile/tablet, show on desktop */
+.desktop-only {
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .desktop-only {
+    display: none;
+  }
+}
+
+/* Hide on desktop, show on mobile/tablet */
+.mobile-only {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .mobile-only {
+    display: block;
+  }
+}
+
+/* Hide on phone only (tablet/desktop can see) */
+@media (max-width: 480px) {
+  .phone-hidden {
+    display: none;
+  }
+
+  .fields-stack {
+    flex-direction: column;
+  }
+}
+
 /* Join Our Team form */
 .form-label {
   display: block;
@@ -184,7 +227,7 @@ body {
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .nav-links {
     display: none;
   }
