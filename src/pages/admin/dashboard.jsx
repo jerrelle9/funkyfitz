@@ -13,8 +13,14 @@ export default function AdminDashboard() {
   const [togglingId, setTogglingId] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
 
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [upcomingLoading, setUpcomingLoading] = useState(true);
+  const [upcomingTogglingId, setUpcomingTogglingId] = useState(null);
+  const [upcomingDeletingId, setUpcomingDeletingId] = useState(null);
+
   useEffect(() => {
     fetchEvents();
+    fetchUpcomingEvents();
   }, []);
 
   async function fetchEvents() {
@@ -24,6 +30,44 @@ export default function AdminDashboard() {
       .order("date", { ascending: false });
     setEvents(data || []);
     setLoading(false);
+  }
+
+  async function fetchUpcomingEvents() {
+    const { data } = await supabase
+      .from("upcoming_events")
+      .select("id, name, date, time, ticket_link, image_url, is_published")
+      .order("date", { ascending: true });
+    setUpcomingEvents(data || []);
+    setUpcomingLoading(false);
+  }
+
+  async function toggleUpcomingPublished(event) {
+    setUpcomingTogglingId(event.id);
+    await supabase
+      .from("upcoming_events")
+      .update({ is_published: !event.is_published })
+      .eq("id", event.id);
+    setUpcomingEvents(prev =>
+      prev.map(e => e.id === event.id ? { ...e, is_published: !e.is_published } : e)
+    );
+    setUpcomingTogglingId(null);
+  }
+
+  async function deleteUpcomingEvent(event) {
+    if (!confirm(`Delete "${event.name}"? This cannot be undone.`)) return;
+    setUpcomingDeletingId(event.id);
+
+    // Delete image from storage
+    const marker = "/upcoming-events/";
+    const idx = event.image_url.indexOf(marker);
+    if (idx !== -1) {
+      const filename = event.image_url.slice(idx + marker.length);
+      await supabase.storage.from("upcoming-events").remove([filename]);
+    }
+
+    await supabase.from("upcoming_events").delete().eq("id", event.id);
+    setUpcomingEvents(prev => prev.filter(e => e.id !== event.id));
+    setUpcomingDeletingId(null);
   }
 
   async function togglePublished(event) {
@@ -146,7 +190,133 @@ export default function AdminDashboard() {
       {/* Content */}
       <div style={{ maxWidth: 900, margin: "0 auto", padding: "2.5rem 2rem", flex: 1, width: "100%" }}>
 
-        {/* Header row */}
+        {/* Upcoming Events section */}
+        <div style={{ marginBottom: "3rem" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem", flexWrap: "wrap", gap: 12 }}>
+            <div>
+              <h1 style={{ fontSize: 26, fontWeight: 800, color: "#fff", margin: 0 }}>Upcoming Events</h1>
+              <p style={{ fontSize: 13, color: "#888", margin: "4px 0 0" }}>
+                {upcomingEvents.length} total · {upcomingEvents.filter(e => e.is_published).length} published
+              </p>
+            </div>
+            <button
+              onClick={() => navigate("/admin/upcoming-events/new")}
+              style={{
+                background: PURPLE, color: "#fff", border: "none",
+                borderRadius: 10, padding: "11px 22px",
+                fontSize: 14, fontWeight: 700, cursor: "pointer",
+                display: "flex", alignItems: "center", gap: 8,
+                transition: "background 0.2s",
+              }}
+              onMouseEnter={e => e.currentTarget.style.background = PURPLE_DARK}
+              onMouseLeave={e => e.currentTarget.style.background = PURPLE}
+            >
+              <span style={{ fontSize: 18, lineHeight: 1 }}>+</span> Add Event
+            </button>
+          </div>
+
+          {upcomingLoading ? (
+            <div style={{ color: "#888", fontSize: 14, textAlign: "center", paddingTop: "1rem" }}>Loading…</div>
+          ) : upcomingEvents.length === 0 ? (
+            <div style={{
+              textAlign: "center", padding: "2.5rem 2rem",
+              background: "#1a0a3a", borderRadius: 16,
+              border: "1px solid rgba(107,33,200,0.15)",
+            }}>
+              <div style={{ color: "#888", fontSize: 14 }}>No upcoming events yet.</div>
+            </div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {upcomingEvents.map(event => (
+                <div key={event.id} className="dash-row" onClick={() => navigate(`/admin/upcoming-events/${event.id}`)} style={{
+                  background: "#1a0a3a",
+                  border: "1px solid rgba(107,33,200,0.18)",
+                  borderRadius: 14,
+                  padding: "1.1rem 1.4rem",
+                  display: "flex", alignItems: "center",
+                  gap: 16, flexWrap: "wrap",
+                  cursor: "pointer",
+                }}>
+                  {/* Published badge */}
+                  <div style={{
+                    flexShrink: 0,
+                    width: 8, height: 8, borderRadius: "50%",
+                    background: event.is_published ? "#22c55e" : "#555",
+                    boxShadow: event.is_published ? "0 0 6px #22c55e" : "none",
+                  }} />
+
+                  {/* Flyer thumbnail */}
+                  <img
+                    src={event.image_url}
+                    alt={event.name}
+                    style={{ width: 48, height: 48, objectFit: "cover", borderRadius: 8, flexShrink: 0 }}
+                  />
+
+                  {/* Info */}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ color: "#fff", fontWeight: 700, fontSize: 15, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                      {event.name}
+                    </div>
+                    <div style={{ fontSize: 12, color: "#888", marginTop: 2 }}>
+                      {formatDate(event.date)} · {event.time}
+                    </div>
+                  </div>
+
+                  {/* Status pill */}
+                  <div style={{
+                    flexShrink: 0,
+                    fontSize: 11, fontWeight: 700, letterSpacing: 0.5,
+                    padding: "4px 12px", borderRadius: 20,
+                    background: event.is_published ? "rgba(34,197,94,0.12)" : "rgba(255,255,255,0.06)",
+                    color: event.is_published ? "#22c55e" : "#666",
+                    textTransform: "uppercase",
+                  }}>
+                    {event.is_published ? "Published" : "Draft"}
+                  </div>
+
+                  {/* Actions */}
+                  <div className="dash-actions" style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+                    <button
+                      onClick={e => { e.stopPropagation(); toggleUpcomingPublished(event); }}
+                      disabled={upcomingTogglingId === event.id}
+                      style={{
+                        background: event.is_published ? "rgba(255,92,77,0.1)" : "rgba(34,197,94,0.1)",
+                        border: `1px solid ${event.is_published ? "rgba(255,92,77,0.3)" : "rgba(34,197,94,0.3)"}`,
+                        color: event.is_published ? CORAL : "#22c55e",
+                        borderRadius: 8, padding: "6px 14px",
+                        fontSize: 13, cursor: upcomingTogglingId === event.id ? "not-allowed" : "pointer",
+                        fontWeight: 500, opacity: upcomingTogglingId === event.id ? 0.6 : 1,
+                      }}
+                    >
+                      {event.is_published ? "Unpublish" : "Publish"}
+                    </button>
+
+                    <button
+                      onClick={e => { e.stopPropagation(); deleteUpcomingEvent(event); }}
+                      disabled={upcomingDeletingId === event.id}
+                      style={{
+                        background: "rgba(255,92,77,0.08)", border: "1px solid rgba(255,92,77,0.2)",
+                        color: "#ff5c4d99", borderRadius: 8, padding: "6px 14px",
+                        fontSize: 13, cursor: upcomingDeletingId === event.id ? "not-allowed" : "pointer",
+                        fontWeight: 500, opacity: upcomingDeletingId === event.id ? 0.5 : 1,
+                        transition: "color 0.2s",
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.color = CORAL}
+                      onMouseLeave={e => e.currentTarget.style.color = "#ff5c4d99"}
+                    >
+                      {upcomingDeletingId === event.id ? "Deleting…" : "Delete"}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Divider */}
+        <div style={{ borderTop: "1px solid rgba(107,33,200,0.15)", marginBottom: "3rem" }} />
+
+        {/* Past Events header row */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2rem", flexWrap: "wrap", gap: 12 }}>
           <div>
             <h1 style={{ fontSize: 26, fontWeight: 800, color: "#fff", margin: 0 }}>Events</h1>
@@ -196,13 +366,14 @@ export default function AdminDashboard() {
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {events.map(event => (
-              <div key={event.id} className="dash-row" style={{
+              <div key={event.id} className="dash-row" onClick={() => navigate(`/admin/events/${event.slug}`)} style={{
                 background: "#1a0a3a",
                 border: "1px solid rgba(107,33,200,0.18)",
                 borderRadius: 14,
                 padding: "1.1rem 1.4rem",
                 display: "flex", alignItems: "center",
                 gap: 16, flexWrap: "wrap",
+                cursor: "pointer",
               }}>
                 {/* Published badge */}
                 <div style={{
@@ -240,20 +411,7 @@ export default function AdminDashboard() {
                 {/* Actions */}
                 <div className="dash-actions" style={{ display: "flex", gap: 8, flexShrink: 0 }}>
                   <button
-                    onClick={() => navigate(`/admin/events/${event.slug}`)}
-                    style={{
-                      background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)",
-                      color: "#ccc", borderRadius: 8, padding: "6px 14px",
-                      fontSize: 13, cursor: "pointer", fontWeight: 500,
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.color = "#fff"}
-                    onMouseLeave={e => e.currentTarget.style.color = "#ccc"}
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    onClick={() => togglePublished(event)}
+                    onClick={e => { e.stopPropagation(); togglePublished(event); }}
                     disabled={togglingId === event.id}
                     style={{
                       background: event.published ? "rgba(255,92,77,0.1)" : "rgba(34,197,94,0.1)",
@@ -268,7 +426,7 @@ export default function AdminDashboard() {
                   </button>
 
                   <button
-                    onClick={() => deleteEvent(event)}
+                    onClick={e => { e.stopPropagation(); deleteEvent(event); }}
                     disabled={deletingId === event.id}
                     style={{
                       background: "rgba(255,92,77,0.08)", border: "1px solid rgba(255,92,77,0.2)",

@@ -259,11 +259,7 @@ export default function EventGallery() {
               <div
                 key={path}
                 onClick={() => setLightboxIndex(i)}
-                style={{
-                  aspectRatio: "4/3",
-                  cursor: "pointer",
-                  overflow: "hidden",
-                }}
+                style={{ cursor: "pointer", overflow: "hidden", borderRadius: 4 }}
               >
                 <img
                   src={getThumbnailUrl(path)}
@@ -271,9 +267,9 @@ export default function EventGallery() {
                   loading="lazy"
                   style={{
                     width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
+                    height: 475,
                     display: "block",
+                    objectFit: "fill",
                     transition: "transform 0.25s ease",
                   }}
                   onMouseEnter={e => e.currentTarget.style.transform = "scale(1.05)"}

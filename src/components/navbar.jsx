@@ -16,7 +16,6 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const isEventGallery = /^\/gallery\/.+/.test(location.pathname);
-  const isAdminEvent = isAdmin && /^\/admin\/events\/.+/.test(location.pathname);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -68,6 +67,17 @@ export default function Navbar() {
             </button>
           ))}
           {isAdmin && (
+            <button onClick={() => handleNav("/admin")} style={{
+              background: "none", border: "none", color: "#ddd", fontSize: 14, cursor: "pointer",
+              transition: "color 0.2s",
+            }}
+              onMouseEnter={e => e.currentTarget.style.color = "#fff"}
+              onMouseLeave={e => e.currentTarget.style.color = "#ddd"}
+            >
+              Dashboard
+            </button>
+          )}
+          {isAdmin && (
             <button onClick={handleSignOut} style={{
               background: "none", border: "none", color: CORAL, fontSize: 14, cursor: "pointer",
               fontWeight: 600, transition: "opacity 0.2s",
@@ -101,16 +111,16 @@ export default function Navbar() {
             ← All Events
           </button>
         )}
-        {isAdminEvent && (
-          <button className="nav-drawer-item" onClick={() => handleNav("/admin")} style={{ color: CORAL }}>
-            ← Dashboard
-          </button>
-        )}
         {navLinks.filter(({ label }) => !(isAdmin && label === "Join Our Team")).map(({ label, to }) => (
           <button key={label} className="nav-drawer-item" onClick={() => handleNav(to)}>
             {label}
           </button>
         ))}
+        {isAdmin && (
+          <button className="nav-drawer-item" onClick={() => handleNav("/admin")}>
+            Dashboard
+          </button>
+        )}
         {isAdmin && (
           <button className="nav-drawer-item" onClick={handleSignOut} style={{ color: CORAL, marginTop: "auto" }}>
             Sign Out

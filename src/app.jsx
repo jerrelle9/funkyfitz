@@ -7,6 +7,8 @@ import AdminLogin from "./pages/admin/login";
 import AdminDashboard from "./pages/admin/dashboard";
 import NewEvent from "./pages/admin/newEvent";
 import ManageEvent from "./pages/admin/manageEvent";
+import NewUpcomingEvent from "./pages/admin/newUpcomingEvent";
+import ManageUpcomingEvent from "./pages/admin/manageUpcomingEvent";
 import RequireAuth from "./components/admin/requireAuth";
 import AuthCallback from "./pages/authCallback";
 
@@ -28,6 +30,8 @@ export default function App() {
         <Route path="/admin" element={<RequireAuth><AdminDashboard /></RequireAuth>} />
         <Route path="/admin/events/new" element={<RequireAuth><NewEvent /></RequireAuth>} />
         <Route path="/admin/events/:slug" element={<RequireAuth><ManageEvent /></RequireAuth>} />
+        <Route path="/admin/upcoming-events/new" element={<RequireAuth><NewUpcomingEvent /></RequireAuth>} />
+        <Route path="/admin/upcoming-events/:id" element={<RequireAuth><ManageUpcomingEvent /></RequireAuth>} />
       </Routes>
     </BrowserRouter>
   );
