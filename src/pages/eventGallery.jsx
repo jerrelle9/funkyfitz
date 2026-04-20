@@ -244,17 +244,26 @@ export default function EventGallery() {
       </div>
 
       {/* Photo grid */}
+      <style>{`
+        @media (max-width: 480px) {
+          .event-photo-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+          .event-photo-img { height: 200px !important; object-fit: fill !important; }
+        }
+      `}</style>
       <div style={{ padding: "2.5rem" }}>
         {imagePaths.length === 0 ? (
           <div style={{ textAlign: "center", color: "#888", paddingTop: "5rem", fontSize: 15 }}>
             No photos yet.
           </div>
         ) : (
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: 16,
-          }}>
+          <div
+            className="event-photo-grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: 16,
+            }}
+          >
             {imagePaths.map((path, i) => (
               <div
                 key={path}
@@ -265,6 +274,7 @@ export default function EventGallery() {
                   src={getThumbnailUrl(path)}
                   alt=""
                   loading="lazy"
+                  className="event-photo-img"
                   style={{
                     width: "100%",
                     height: 475,
