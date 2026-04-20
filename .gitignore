@@ -44,3 +44,9 @@ Thumbs.db
 # pnpm-lock.yaml
 
 src/assets/harpylyefentertainment_bubble-gum_2025-05-01_0020
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
