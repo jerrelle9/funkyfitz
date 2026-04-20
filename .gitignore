@@ -38,8 +38,7 @@ Thumbs.db
 # Assets
 # src/assets/
 
-# Package manager lock files (optional - uncomment if you want to commit these)
-# package-lock.json
+# Package manager lock files
 # yarn.lock
 # pnpm-lock.yaml
 
