@@ -34,8 +34,9 @@ function UpcomingEventsSection() {
       .then(({ data }) => {
         const now = new Date();
         const future = (data || []).filter(event => {
+          if (!event.time) return true;
           const eventDateTime = new Date(`${event.date}T${event.time}`);
-          return eventDateTime > now;
+          return isNaN(eventDateTime) || eventDateTime > now;
         });
         setEvents(future);
         setLoading(false);

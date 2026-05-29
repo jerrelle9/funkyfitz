@@ -168,7 +168,7 @@ export default function EventGallery() {
   function getThumbnailUrl(path) {
     return supabase.storage
       .from("event-galleries")
-      .getPublicUrl(path, { transform: { width: 600, quality: 80 } })
+      .getPublicUrl(path)
       .data.publicUrl;
   }
 
