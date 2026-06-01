@@ -2,6 +2,102 @@ import { useState } from "react";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { PURPLE, PURPLE_DARK, YELLOW, CORAL, DARK } from "../styles/colors";
+import img2 from "../assets/Image (2).jfif";
+import img3 from "../assets/Image (3).jfif";
+import img4 from "../assets/Image (4).jfif";
+import img5 from "../assets/Image (5).jfif";
+
+/* Each photo: left/top in px within the 870×660 inner canvas */
+const COLLAGE_PHOTOS = [
+  { src: img2, left:   0, top: 20,  width: 380, height: 506, rotate: "-9deg",  zIndex: 2 },
+  { src: img3, left: 220, top: 10,  width: 440, height: 328, rotate:  "7deg",  zIndex: 3 },
+  { src: img4, left:  35, top: 210, width: 420, height: 314, rotate: "-5deg",  zIndex: 4 },
+  { src: img5, left: 510, top: 148, width: 360, height: 480, rotate: "11deg",  zIndex: 1 },
+];
+
+function TeamCollage() {
+  return (
+    <div style={{ position: "relative", width: "100%", overflow: "hidden", background: "#0d0620" }}>
+      <style>{`
+        .collage-stage {
+          height: 720px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 36px 0 24px;
+        }
+        .collage-inner {
+          position: relative;
+          width: 870px;
+          height: 660px;
+          flex-shrink: 0;
+        }
+        @media (max-width: 960px) {
+          .collage-stage { height: 540px; }
+          .collage-inner { transform: scale(0.72); transform-origin: center; }
+        }
+        @media (max-width: 600px) {
+          .collage-stage { height: 320px; }
+          .collage-inner { transform: scale(0.44); transform-origin: center; }
+        }
+        .photo-print {
+          position: absolute;
+          background: #fff;
+          padding: 7px 7px 26px;
+          box-shadow: 0 16px 48px rgba(0,0,0,0.75), 0 4px 12px rgba(0,0,0,0.5);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          cursor: default;
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          transform-style: preserve-3d;
+        }
+        .photo-print:hover {
+          transform: scale(1.1) rotate(0deg) !important;
+          box-shadow: 0 24px 64px rgba(0,0,0,0.85), 0 8px 20px rgba(107,33,200,0.4) !important;
+          z-index: 10 !important;
+        }
+        .photo-print img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
+          image-rendering: high-quality;
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+        }
+      `}</style>
+
+      <div className="collage-stage">
+        <div className="collage-inner">
+          {COLLAGE_PHOTOS.map((p, i) => (
+            <div
+              key={i}
+              className="photo-print"
+              style={{
+                left: p.left,
+                top: p.top,
+                width: p.width,
+                height: p.height + 33,
+                transform: `rotate(${p.rotate})`,
+                zIndex: p.zIndex,
+              }}
+            >
+              <img src={p.src} alt="" style={{ height: p.height }} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div style={{
+        position: "absolute", bottom: 0, left: 0, right: 0,
+        height: 140,
+        background: "linear-gradient(to bottom, transparent, #0d0620)",
+        pointerEvents: "none",
+      }} />
+    </div>
+  );
+}
 
 const SHIRT_SIZES = ["XS", "S", "M", "L", "XL", "XXL", "3XL"];
 
@@ -63,7 +159,9 @@ export default function JoinTeam() {
     <div style={{ minHeight: "100vh", background: "#0d0620", fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
       <Navbar />
 
-      <div style={{ maxWidth: 640, margin: "0 auto", padding: "4rem 2rem 6rem" }}>
+      <TeamCollage />
+
+      <div style={{ maxWidth: 640, margin: "0 auto", padding: "2rem 2rem 6rem" }}>
 
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
